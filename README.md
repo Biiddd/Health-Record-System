@@ -6,4 +6,4 @@
 - Vite
 - SQLite3
 ## 开发平台
-WebStorm
+- WebStorm
