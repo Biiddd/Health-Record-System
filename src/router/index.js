@@ -17,12 +17,12 @@ const routes = [
             {
                 path: '/overview',
                 name: 'Overview',
-                component: import('@/components/Overview.vue')
+                component:()=> import('@/components/Overview.vue')
             },
             {
                 path: '/inputdata',
                 name: 'InputData',
-                component: import('@/components/Input.vue')
+                component:() =>import('@/components/Input.vue')
             },
             {
                 path: '/charts/:chartType',
