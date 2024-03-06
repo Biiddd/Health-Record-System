@@ -91,6 +91,7 @@ import axios from 'axios';
 import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
+import {message} from "ant-design-vue";
 
 const onDisabledDate = current => {
   return current && current > dayjs().endOf('day');
@@ -122,14 +123,15 @@ const submitForm = () => {
   axios.post(`http://localhost:3000/api/input`, checkData)
       .then(response => {
         console.log('提交表单成功：', response.data);
+        message.success('数据录入成功');
       })
       .catch(error => {
         console.error('提交表单失败：', error);
+        message.warning('录入失败，请联系你崽')
       });
 
   // axios.post('/api/input', {checkData});
-   console.log('表单输入的值', checkData);
-
+  //  console.log('表单输入的值', checkData);
 };
 
 </script>
