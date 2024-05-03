@@ -1,55 +1,93 @@
-<script setup>
-
-</script>
-
 <template>
   <div class="main">
-    <div style="font-size: 32px; font-weight: bolder">
-      上一次化验时间
+    <div style="font-size: 32px; font-weight: bolder; padding-bottom:20px">
+      上一次化验时间：{{lastCheckDate}}
     </div>
-    <div style="font-size: 32px; font-weight: bolder">
+    <div style="font-size: 32px; font-weight: bolder; padding-top:30px; padding-bottom:20px">
       上一次化验数据
     </div>
-    <div style="padding: 20px">
-      <a-table :dataSource="dataSource" :columns="columns" />
+    <div style="padding: 20px, height=85vh">
+      <a-table 
+      :dataSource="dataSource" 
+      :columns="columns" 
+      :pagination="false"
+      />
     </div>
   </div>
-
 </template>
 
-<script>
-export default {
-  setup() {
-    return {
-      dataSource: [
-        {
-          key: '1',
-          name: '胡彦斌',
-          age: 32,
-          address: '西湖区湖底公园1号',
-        },
-      ],
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
 
-      columns: [
-        {
-          title: '姓名',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: '年龄',
-          dataIndex: 'age',
-          key: 'age',
-        },
-        {
-          title: '住址',
-          dataIndex: 'address',
-          key: 'address',
-        },
-      ],
-    };
+const route = useRoute();
+const dataSource = ref([]);
+const lastCheckDate = ref('');
+const lastCheckHospital = ref('');
+
+const columns = [
+  {
+    title: 'CA125',
+    dataIndex: 'CA125',
+    key: 'CA125',
   },
-};
+  {
+    title: 'CA199',
+    dataIndex: 'CA199',
+    key: 'CA199',
+  },
+  {
+    title: 'CEA',
+    dataIndex: 'CEA',
+    key: 'CEA',
+  },
+  {
+    title: 'CA153',
+    dataIndex: 'CA153',
+    key: 'CA153',
+  },
+  {
+    title: 'CA724',
+    dataIndex: 'CA724',
+    key: 'CA724',
+  },
+  {
+    title: 'HE4',
+    dataIndex: 'HE4',
+    key: 'HE4',
+  },
+];
+
+onMounted(() => {
+  axios.get('http://localhost:33001/api/latest')
+    .then(response => {
+      const rawData = response.data;
+      lastCheckDate.value = rawData[0].date;
+
+      const dataMap = {
+        1: 'CA125',
+        2: 'CA199',
+        3: 'CEA',
+        4: 'CA153',
+        5: 'CA724',
+        6: 'HE4'
+      };
+
+      const data = {};
+      rawData.forEach(item => {
+        const columnKey = dataMap[item.item_id];
+        if (columnKey) {
+          data[columnKey] = item.value;
+        }
+      });
+
+      dataSource.value = [data];
+    })
+    .catch(error => {
+      console.error('获取数据失败：', error);
+    });
+});
 </script>
 
 <style scoped>
@@ -59,7 +97,7 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: #f0f2f5;
+  background-color:;
 }
 
 </style>

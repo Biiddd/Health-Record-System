@@ -3,10 +3,6 @@
     <div class="login-box">
       <div class="top">
         <div class="logo">
-<!--          <img-->
-<!--              src="~@/assets/img/LB-logo.png"-->
-<!--              alt=""-->
-<!--          >-->
         </div>
       </div>
       <div class="mid">
@@ -72,7 +68,7 @@ const formState = reactive<FormState>({
   remember: true,
 });
 
-const correctUsername = '1'; // 正确的用户名
+const correctUsername = '1';
 const correctPassword = '1';
 const onFinish = () => {
   if(formState.username !== correctUsername || formState.password !== correctPassword){
