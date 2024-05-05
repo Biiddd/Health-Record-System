@@ -12,12 +12,10 @@
     const myChart = ref(null);
     const initializeChart = async () => {
     const chartType = route.params.chartType;
-    console.log('chartType:', chartType);
 
     try {
         const response = await axios.get(`http://localhost:33001/api/charts/${chartType}`);
         const rawData = response.data;
-        console.log('获取到的数据：', rawData);
 
         const xData = rawData.map(item => item.date);
         const yData = rawData.map(item => item.value);
@@ -46,7 +44,7 @@
 
         myChart.value.setOption(option);
     } catch (error) {
-        console.error('获取数据失败：', error);
+        //console.error('获取数据失败：', error);
     }
 };
 

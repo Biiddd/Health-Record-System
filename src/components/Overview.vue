@@ -6,7 +6,7 @@
     <div style="font-size: 32px; font-weight: bolder; padding-top:30px; padding-bottom:20px">
       上一次化验数据
     </div>
-    <div style="padding: 20px, height=85vh">
+    <div style="padding: 20px; height:80vh">
       <a-table 
       :dataSource="dataSource" 
       :columns="columns" 
@@ -97,7 +97,6 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color:;
 }
 
 </style>

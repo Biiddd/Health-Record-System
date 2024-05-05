@@ -4,7 +4,7 @@
     <div class="logo">
         <img src="@/assets/logo.png" alt="logo">
     </div>
-    <h1 style="color: white; font-size: 48px; line-height: bolder; align-items:center">晓芸指标记录系统</h1>
+    <h1 style="color: white; font-size: 48px; line-height: 20px; align-items:center">晓芸指标记录系统</h1>
 </a-layout-header>
 
     <a-layout-content style="padding: 0 50px">
@@ -18,62 +18,72 @@
           >
             <a-menu-item key="1">
               <router-link to="/Overview">
-                <user-outlined />
+                <BookOutlined />
                 <span>概况</span>
               </router-link>
             </a-menu-item>
             
             <a-menu-item key="2">
               <router-link to="/inputdata">
-                <user-outlined />
+                <EditOutlined />
                 <span>数据录入</span>
               </router-link>
             </a-menu-item>
 
             <a-menu-item key="3">
               <router-link to="/charts/ca125">
-                <user-outlined />
+                <LineChartOutlined />
                 <span>CA125</span>
               </router-link>
             </a-menu-item>
             
             <a-menu-item key="4">
               <router-link to="/charts/ca199">
-                <user-outlined />
+                <LineChartOutlined />
                 <span>CA199</span>
               </router-link>
             </a-menu-item>
 
             <a-menu-item key="5">
               <router-link to="/charts/cea" class="custom-menu-item">
-                <user-outlined />
+                <LineChartOutlined />
                 <span>CEA</span>
               </router-link>
             </a-menu-item>
 
             <a-menu-item key="6">
               <router-link to="/charts/ca153" tag="div" class="custom-menu-item">
-                <user-outlined />
+                <LineChartOutlined />
                 <span>CA153</span>
               </router-link>
             </a-menu-item>
 
             <a-menu-item key="7">
               <router-link to="/charts/ca724" tag="div" class="custom-menu-item">
-                <user-outlined />
+                <LineChartOutlined />
                 <span>CA724</span>
               </router-link>
             </a-menu-item>
+
             <a-menu-item key="8">
               <router-link to="/charts/he4" tag="div" class="custom-menu-item">
-                <user-outlined />
+                <LineChartOutlined />
                 <span>HE4</span>
               </router-link>
-           </a-menu-item>
+            </a-menu-item>
 
+              <a-button
+                  type="primary"
+                  danger
+                  size="large"
+                  style="margin-left: 23px;"
+                  @click="logout"
+              >
+                  <span>注销</span>
+              </a-button>
           </a-menu>
         </a-layout-sider>
-        <a-layout-content style="padding:0 24px; minHeight:280px; height:84vh">
+        <a-layout-content style="padding:0 24px; height:78vh">
           <router-view/>
         </a-layout-content>
       </a-layout>
@@ -83,14 +93,23 @@
     </a-layout-footer>
   </a-layout>
 </template>
-<script lang="ts" setup>
+<script  setup>
 import { ref } from 'vue';
-import {useRouter} from "vue-router";
-import {UserOutlined} from "@ant-design/icons-vue";
-const selectedKeys2 = ref<string[]>(['1']);
-const openKeys = ref<string[]>(['sub1']);
+import { useRouter } from 'vue-router';
+import { UserOutlined, LineChartOutlined, BookOutlined, EditOutlined } from '@ant-design/icons-vue';
+import {setlogout} from "@/auth.js";
+
+const selectedKeys2 = ref(['1']);
+const openKeys = ref(['sub1']);
 const router = useRouter();
-//console.log('s2',selectedKeys2.value)
+
+const logout = () => {
+  // 清除用户信息
+  setlogout();
+
+  // 重定向到登录页面
+  router.push({name: 'Login'});
+}
 </script>
 
 <style scoped>
