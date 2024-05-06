@@ -1,32 +1,15 @@
 <template>
   <a-layout>
-    <a-layout-header
-      class="header"
-      style="
-        background-color: #4a90e4;
-        height: 10vh;
-        display: flex;
-        align-items: center;
-      "
-    >
+    <a-layout-header class="header">
       <div class="logo">
         <img src="@/assets/logo.png" alt="logo" />
       </div>
-      <h1
-        style="
-          color: white;
-          font-size: 48px;
-          line-height: 20px;
-          align-items: center;
-        "
-      >
-        晓芸指标记录系统
-      </h1>
+      <h1 class="h1-text">晓芸指标记录系统</h1>
     </a-layout-header>
 
-    <a-layout-content style="padding: 0 50px">
-      <a-layout style="padding: 24px 0; background: #fff">
-        <a-layout-sider width="200" style="background: #fff">
+    <a-layout-content class="content-container">
+      <a-layout class="content-container-layout">
+        <a-layout-sider>
           <a-menu
             v-model:selectedKeys="selectedKeys2"
             v-model:openKeys="openKeys"
@@ -108,14 +91,12 @@
             </a-button>
           </a-menu>
         </a-layout-sider>
-        <a-layout-content style="padding: 0 24px; height: 78vh">
+        <a-layout-content class="content">
           <router-view />
         </a-layout-content>
       </a-layout>
     </a-layout-content>
-    <a-layout-footer style="text-align: center; height: 6vh">
-      Copyright © 2024 Biid
-    </a-layout-footer>
+    <a-layout-footer class="footer"> Copyright © 2024 Biid</a-layout-footer>
   </a-layout>
 </template>
 <script setup>
@@ -156,6 +137,18 @@ const logout = () => {
   margin: 24px 0 16px 24px;
 }
 
+.header {
+  background-color: #4a90e4;
+  height: 10vh;
+  display: flex;
+}
+
+.h1-text {
+  color: white;
+  font-size: 40px;
+  align-items: center;
+}
+
 .site-layout-background {
   background: #fff;
 }
@@ -163,6 +156,7 @@ const logout = () => {
 .custom-menu-item {
   margin-bottom: 10px;
 }
+
 .logo {
   width: 90px;
   height: 90px;
@@ -174,7 +168,22 @@ const logout = () => {
   transform: scale(0.8);
 }
 
+.content-container {
+  padding: 0 25px;
+}
+
+.content-container-layout {
+  padding: 24px 0;
+  background: #fff;
+}
+
 .content {
-  padding: 20px;
+  padding: 0 24px;
+  height: 78vh;
+}
+
+.footer {
+  text-align: center;
+  height: 6vh;
 }
 </style>
