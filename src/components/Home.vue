@@ -1,20 +1,37 @@
 <template>
   <a-layout>
-    <a-layout-header class="header" style="background-color: #4A90E4; height: 10vh; display: flex; align-items: center;">
-    <div class="logo">
-        <img src="@/assets/logo.png" alt="logo">
-    </div>
-    <h1 style="color: white; font-size: 48px; line-height: 20px; align-items:center">晓芸指标记录系统</h1>
-</a-layout-header>
+    <a-layout-header
+      class="header"
+      style="
+        background-color: #4a90e4;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+      "
+    >
+      <div class="logo">
+        <img src="@/assets/logo.png" alt="logo" />
+      </div>
+      <h1
+        style="
+          color: white;
+          font-size: 48px;
+          line-height: 20px;
+          align-items: center;
+        "
+      >
+        晓芸指标记录系统
+      </h1>
+    </a-layout-header>
 
     <a-layout-content style="padding: 0 50px">
       <a-layout style="padding: 24px 0; background: #fff">
         <a-layout-sider width="200" style="background: #fff">
           <a-menu
-              v-model:selectedKeys="selectedKeys2"
-              v-model:openKeys="openKeys"
-              mode="inline"
-              style="height: 100%"
+            v-model:selectedKeys="selectedKeys2"
+            v-model:openKeys="openKeys"
+            mode="inline"
+            style="height: 100%"
           >
             <a-menu-item key="1">
               <router-link to="/Overview">
@@ -22,7 +39,7 @@
                 <span>概况</span>
               </router-link>
             </a-menu-item>
-            
+
             <a-menu-item key="2">
               <router-link to="/inputdata">
                 <EditOutlined />
@@ -36,7 +53,7 @@
                 <span>CA125</span>
               </router-link>
             </a-menu-item>
-            
+
             <a-menu-item key="4">
               <router-link to="/charts/ca199">
                 <LineChartOutlined />
@@ -52,14 +69,22 @@
             </a-menu-item>
 
             <a-menu-item key="6">
-              <router-link to="/charts/ca153" tag="div" class="custom-menu-item">
+              <router-link
+                to="/charts/ca153"
+                tag="div"
+                class="custom-menu-item"
+              >
                 <LineChartOutlined />
                 <span>CA153</span>
               </router-link>
             </a-menu-item>
 
             <a-menu-item key="7">
-              <router-link to="/charts/ca724" tag="div" class="custom-menu-item">
+              <router-link
+                to="/charts/ca724"
+                tag="div"
+                class="custom-menu-item"
+              >
                 <LineChartOutlined />
                 <span>CA724</span>
               </router-link>
@@ -72,35 +97,40 @@
               </router-link>
             </a-menu-item>
 
-              <a-button
-                  type="primary"
-                  danger
-                  size="large"
-                  style="margin-left: 23px;"
-                  @click="logout"
-              >
-                  <span>注销</span>
-              </a-button>
+            <a-button
+              type="primary"
+              danger
+              size="large"
+              style="margin-left: 23px"
+              @click="logout"
+            >
+              <span>注销</span>
+            </a-button>
           </a-menu>
         </a-layout-sider>
-        <a-layout-content style="padding:0 24px; height:78vh">
-          <router-view/>
+        <a-layout-content style="padding: 0 24px; height: 78vh">
+          <router-view />
         </a-layout-content>
       </a-layout>
     </a-layout-content>
-    <a-layout-footer style="text-align: center; height:6vh">
+    <a-layout-footer style="text-align: center; height: 6vh">
       Copyright © 2024 Biid
     </a-layout-footer>
   </a-layout>
 </template>
-<script  setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { UserOutlined, LineChartOutlined, BookOutlined, EditOutlined } from '@ant-design/icons-vue';
-import {setlogout} from "@/auth.js";
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import {
+  UserOutlined,
+  LineChartOutlined,
+  BookOutlined,
+  EditOutlined,
+} from "@ant-design/icons-vue";
+import { setlogout } from "@/auth.js";
 
-const selectedKeys2 = ref(['1']);
-const openKeys = ref(['sub1']);
+const selectedKeys2 = ref(["1"]);
+const openKeys = ref(["sub1"]);
 const router = useRouter();
 
 const logout = () => {
@@ -108,8 +138,8 @@ const logout = () => {
   setlogout();
 
   // 重定向到登录页面
-  router.push({name: 'Login'});
-}
+  router.push({ name: "Login" });
+};
 </script>
 
 <style scoped>
