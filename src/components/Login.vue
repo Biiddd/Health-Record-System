@@ -1,3 +1,69 @@
+<script setup>
+import { reactive, onMounted } from "vue";
+import axios from "axios";
+import { updateUserState } from "@/auth.js";
+import router from "@/router/index.js";
+
+const formState = reactive({
+  username: "",
+  password: "",
+  remember: true,
+});
+
+// 在组件加载时，从本地存储中读取用户名和密码
+onMounted(() => {
+  const storedUsername = localStorage.getItem("rememberedUsername");
+  const storedPassword = localStorage.getItem("rememberedPassword");
+
+  // 如果存储中有数据，填充到表单中，并设置“记住我”选项为true
+  if (storedUsername && storedPassword) {
+    formState.username = storedUsername;
+    formState.password = storedPassword;
+    formState.remember = true;
+  }
+});
+
+const onFinish = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:33001/api/login",
+      formState,
+    );
+
+    if (response.data.success) {
+      //登录成功，获取服务器返回的用户信息
+      const userInfo = formState.username;
+      //console.log('登录成功');
+      // 更新用户状态
+      updateUserState(true, userInfo);
+
+      // 如果选择了“记住我”，将用户名和密码存储到本地存储中
+      if (formState.remember) {
+        localStorage.setItem("rememberedUsername", formState.username);
+        localStorage.setItem("rememberedPassword", formState.password);
+        localStorage.setItem("isLoggedIn", true);
+      } else {
+        // 如果没有选择“记住我”，清除本地存储中的用户名和密码
+        localStorage.removeItem("rememberedUsername");
+        localStorage.removeItem("rememberedPassword");
+      }
+      // 跳转到首页
+      router.push({ name: "Home" });
+    } else {
+      // 账号密码错误，弹出错误信息
+      alert(response.data.message || "用户名或密码错误");
+    }
+  } catch (error) {
+    //console.error('登录请求失败1：', error);
+    alert("登录失败，请稍后再试");
+  }
+};
+
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo);
+};
+</script>
+
 <template>
   <div class="login">
     <div class="login-box">
@@ -46,72 +112,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { reactive, onMounted } from "vue";
-import axios from "axios";
-import { updateUserState } from "@/auth.js";
-import router from "@/router/index.js";
-
-const formState = reactive({
-  username: "",
-  password: "",
-  remember: true,
-});
-
-// 在组件加载时，从本地存储中读取用户名和密码
-onMounted(() => {
-  const storedUsername = localStorage.getItem("rememberedUsername");
-  const storedPassword = localStorage.getItem("rememberedPassword");
-
-  // 如果存储中有数据，填充到表单中，并设置“记住我”选项为true
-  if (storedUsername && storedPassword) {
-    formState.username = storedUsername;
-    formState.password = storedPassword;
-    formState.remember = true;
-  }
-});
-
-const onFinish = async () => {
-  try {
-    const response = await axios.post(
-      "http://localhost:33001/api/login",
-      formState
-    );
-
-    if (response.data.success) {
-      //登录成功，获取服务器返回的用户信息
-      const userInfo = formState.username;
-      //console.log('登录成功');
-      // 更新用户状态
-      updateUserState(true, userInfo);
-
-      // 如果选择了“记住我”，将用户名和密码存储到本地存储中
-      if (formState.remember) {
-        localStorage.setItem("rememberedUsername", formState.username);
-        localStorage.setItem("rememberedPassword", formState.password);
-        localStorage.setItem("isLoggedIn", true);
-      } else {
-        // 如果没有选择“记住我”，清除本地存储中的用户名和密码
-        localStorage.removeItem("rememberedUsername");
-        localStorage.removeItem("rememberedPassword");
-      }
-      // 跳转到首页
-      router.push({ name: "Home" });
-    } else {
-      // 账号密码错误，弹出错误信息
-      alert(response.data.message || "用户名或密码错误");
-    }
-  } catch (error) {
-    //console.error('登录请求失败1：', error);
-    alert("登录失败，请稍后再试");
-  }
-};
-
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-</script>
 
 <style scoped>
 .login {

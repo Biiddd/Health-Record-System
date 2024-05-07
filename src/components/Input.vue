@@ -1,6 +1,52 @@
+<script setup>
+import { reactive } from "vue";
+import axios from "axios";
+import locale from "ant-design-vue/es/date-picker/locale/zh_CN";
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+import { message } from "ant-design-vue";
+
+const onDisabledDate = (current) => {
+  return current && current > dayjs().endOf("day");
+};
+
+const labelCol = {
+  style: {
+    width: "150px",
+  },
+};
+const wrapperCol = {
+  span: 14,
+};
+
+const dateformat = "YYYY-MM-DD";
+const checkData = reactive({
+  date: null,
+  checkHospital: null,
+  ca125Value: null,
+  ca199Value: null,
+  ceaValue: null,
+  ca153Value: null,
+  ca724Value: null,
+  he4Value: null,
+});
+
+const submitForm = () => {
+  axios
+    .post(`http://localhost:33001/api/input`, checkData)
+    .then((response) => {
+      console.log("提交表单成功：", response.data);
+      message.success("数据录入成功");
+    })
+    .catch((error) => {
+      console.error("提交表单失败：", error);
+      message.warning("录入失败，请联系你崽");
+    });
+};
+</script>
+
 <template>
   <meta lang="zh" />
-
   <a-form
     @finish="submitForm"
     :label-col="labelCol"
@@ -90,49 +136,4 @@
   </a-form>
 </template>
 
-<script setup>
-import { toRefs, reactive } from "vue";
-import axios from "axios";
-import locale from "ant-design-vue/es/date-picker/locale/zh_CN";
-import dayjs from "dayjs";
-import "dayjs/locale/zh-cn";
-import { message } from "ant-design-vue";
-
-const onDisabledDate = (current) => {
-  return current && current > dayjs().endOf("day");
-};
-
-const labelCol = {
-  style: {
-    width: "150px",
-  },
-};
-const wrapperCol = {
-  span: 14,
-};
-
-const dateformat = "YYYY-MM-DD";
-const checkData = reactive({
-  date: null,
-  checkHospital: null,
-  ca125Value: null,
-  ca199Value: null,
-  ceaValue: null,
-  ca153Value: null,
-  ca724Value: null,
-  he4Value: null,
-});
-
-const submitForm = () => {
-  axios
-    .post(`http://localhost:33001/api/input`, checkData)
-    .then((response) => {
-      console.log("提交表单成功：", response.data);
-      message.success("数据录入成功");
-    })
-    .catch((error) => {
-      console.error("提交表单失败：", error);
-      message.warning("录入失败，请联系你崽");
-    });
-};
-</script>
+<style scoped></style>

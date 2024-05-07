@@ -1,3 +1,25 @@
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import {
+  LineChartOutlined,
+  BookOutlined,
+  EditOutlined,
+} from "@ant-design/icons-vue";
+import { setlogout } from "@/auth.js";
+
+const selectedKeys2 = ref(["1"]);
+const openKeys = ref(["sub1"]);
+const router = useRouter();
+
+const logout = () => {
+  // 清除用户信息
+  setlogout();
+  // 重定向到登录页面
+  router.push({ name: "Login" });
+};
+</script>
+
 <template>
   <a-layout>
     <a-layout-header class="header">
@@ -99,29 +121,6 @@
     <a-layout-footer class="footer"> Copyright © 2024 Biid</a-layout-footer>
   </a-layout>
 </template>
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import {
-  UserOutlined,
-  LineChartOutlined,
-  BookOutlined,
-  EditOutlined,
-} from "@ant-design/icons-vue";
-import { setlogout } from "@/auth.js";
-
-const selectedKeys2 = ref(["1"]);
-const openKeys = ref(["sub1"]);
-const router = useRouter();
-
-const logout = () => {
-  // 清除用户信息
-  setlogout();
-
-  // 重定向到登录页面
-  router.push({ name: "Login" });
-};
-</script>
 
 <style scoped>
 #components-layout-demo-top-side .logo {

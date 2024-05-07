@@ -1,7 +1,3 @@
-<template>
-  <div id="main" style="width: 1200px; height: 600px"></div>
-</template>
-
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import axios from "axios";
@@ -15,7 +11,7 @@ const initializeChart = async () => {
 
   try {
     const response = await axios.get(
-      `http://localhost:33001/api/charts/${chartType}`
+      `http://localhost:33001/api/charts/${chartType}`,
     );
     const rawData = response.data;
 
@@ -59,5 +55,9 @@ onMounted(() => {
 
 watch(() => route.params.chartType, initializeChart);
 </script>
+
+<template>
+  <div id="main" style="width: 1200px; height: 600px"></div>
+</template>
 
 <style scoped></style>

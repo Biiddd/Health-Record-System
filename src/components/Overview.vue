@@ -1,37 +1,9 @@
-<template>
-  <div class="main">
-    <div style="font-size: 32px; font-weight: bolder; padding-bottom: 20px">
-      上一次化验时间：{{ lastCheckDate }}
-    </div>
-    <div
-      style="
-        font-size: 32px;
-        font-weight: bolder;
-        padding-top: 30px;
-        padding-bottom: 20px;
-      "
-    >
-      上一次化验数据
-    </div>
-    <div style="padding: 20px; height: 80vh">
-      <a-table
-        :dataSource="dataSource"
-        :columns="columns"
-        :pagination="false"
-      />
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
 
-const route = useRoute();
 const dataSource = ref([]);
 const lastCheckDate = ref("");
-const lastCheckHospital = ref("");
 
 const columns = [
   {
@@ -97,6 +69,31 @@ onMounted(() => {
     });
 });
 </script>
+
+<template>
+  <div class="main">
+    <div style="font-size: 32px; font-weight: bolder; padding-bottom: 20px">
+      上一次化验时间：{{ lastCheckDate }}
+    </div>
+    <div
+      style="
+        font-size: 32px;
+        font-weight: bolder;
+        padding-top: 30px;
+        padding-bottom: 20px;
+      "
+    >
+      上一次化验数据
+    </div>
+    <div style="padding: 20px; height: 80vh">
+      <a-table
+        :dataSource="dataSource"
+        :columns="columns"
+        :pagination="false"
+      />
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .main {
