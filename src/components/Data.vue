@@ -1,7 +1,7 @@
 <script setup>
 import { cloneDeep } from "lodash-es";
 import { onMounted, reactive, ref } from "vue";
-import axios from "axios";
+import http from "@/http.js";
 
 const columns = [
   {
@@ -47,10 +47,10 @@ const columns = [
 
 const fetchData = async () => {
   try {
-    const response = await axios.post("http://localhost:33001/api/data");
+    const response = await http.post("/data");
     dataSource.value = response.data;
   } catch (error) {
-    console.error("获取数据失败", error);
+    //console.error("获取数据失败", error);
   }
 };
 const dataSource = ref([]);
@@ -104,7 +104,7 @@ onMounted(() => {
               >保存</a-typography-link
             >
             <a-popconfirm
-              title="确定修改这条数据?"
+              title="取消修改?"
               @confirm="cancel(record.key)"
             >
               <a>取消</a>

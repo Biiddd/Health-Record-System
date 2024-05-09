@@ -1,8 +1,8 @@
 <script setup>
 import { reactive, onMounted } from "vue";
-import axios from "axios";
 import { updateUserState } from "@/auth.js";
 import router from "@/router/index.js";
+import http from "@/http.js";
 
 const formState = reactive({
   username: "",
@@ -25,15 +25,11 @@ onMounted(() => {
 
 const onFinish = async () => {
   try {
-    const response = await axios.post(
-      "http://localhost:33001/api/login",
-      formState,
-    );
+    const response = await http.post("/login", formState);
 
     if (response.data.success) {
       //登录成功，获取服务器返回的用户信息
       const userInfo = formState.username;
-      //console.log('登录成功');
       // 更新用户状态
       updateUserState(true, userInfo);
 
@@ -48,20 +44,17 @@ const onFinish = async () => {
         localStorage.removeItem("rememberedPassword");
       }
       // 跳转到首页
-      router.push({ name: "Home" });
+      await router.push({ name: "Home" });
     } else {
       // 账号密码错误，弹出错误信息
       alert(response.data.message || "用户名或密码错误");
     }
   } catch (error) {
-    //console.error('登录请求失败1：', error);
     alert("登录失败，请稍后再试");
   }
 };
 
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
+const onFinishFailed = (errorInfo) => {};
 </script>
 
 <template>
@@ -136,11 +129,6 @@ const onFinishFailed = (errorInfo) => {
         font-size: 0;
         max-width: 50%;
         margin: 0 auto;
-      }
-
-      &:deep(.company) {
-        font-size: 16px;
-        margin-top: 10px;
       }
     }
 

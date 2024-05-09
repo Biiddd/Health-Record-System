@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import http from "@/http.js";
 
 const dataSource = ref([]);
 const lastCheckDate = ref("");
@@ -39,8 +39,8 @@ const columns = [
 ];
 
 onMounted(() => {
-  axios
-    .get("http://localhost:33001/api/latest")
+  http
+    .get("/latest")
     .then((response) => {
       const rawData = response.data;
       lastCheckDate.value = rawData[0].date;

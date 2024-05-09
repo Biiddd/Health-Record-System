@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {
+  TableOutlined,
   LineChartOutlined,
   BookOutlined,
   EditOutlined,
@@ -62,7 +63,7 @@ const logout = () => {
 
             <a-menu-item key="4">
               <router-link to="/allData">
-                <LineChartOutlined />
+                <TableOutlined />
                 <span>全部数据</span>
               </router-link>
             </a-menu-item>

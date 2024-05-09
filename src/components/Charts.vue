@@ -1,8 +1,8 @@
 <script setup>
 import { reactive } from "vue";
-import axios from "axios";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
+import http from "@/http.js";
 
 const chart = reactive({
   Date: null,
@@ -13,7 +13,7 @@ const confirmQuery = async () => {
   // 格式化日期
   const formattedStartDate = dayjs(chart.Date[0]).format("YYYY-MM-DD");
   const formattedEndDate = dayjs(chart.Date[1]).format("YYYY-MM-DD");
-  const response = await axios.get("http://localhost:33001/api/charts", {
+  const response = await http.get("/charts", {
     params: {
       startDate: formattedStartDate,
       endDate: formattedEndDate,
@@ -21,7 +21,6 @@ const confirmQuery = async () => {
     },
   });
 
-  // 从后端返回的response.data获取数据
   const data = response.data;
 
   // 提取数据进行渲染
@@ -53,7 +52,6 @@ const confirmQuery = async () => {
       },
     ],
   };
-  // 初始化图表并设置选项
   const myChart = echarts.init(document.getElementById("main"));
   myChart.setOption(option);
 };
