@@ -26,11 +26,29 @@ const confirmQuery = async () => {
   // 提取数据进行渲染
   const xData = data.map((item) => item.date);
   const yData = data.map((item) => item.value);
+  // 设置阈值
+  let threshold = 0;
+  if (chart.Type === "CA125") {
+    threshold = 35;
+  } else if (chart.Type === "CA199") {
+    threshold = 37;
+  } else if (chart.Type === "CEA") {
+    threshold = 5;
+  } else if (chart.Type === "CA153") {
+    threshold = 25;
+  } else if (chart.Type === "CA724") {
+    threshold = 6.9;
+  } else if (chart.Type === "HE4") {
+    threshold = 70;
+  }
 
-  // 配置echarts的图表选项
   const option = {
     title: {
       text: `${formattedStartDate} 到 ${formattedEndDate} ${chart.Type}趋势`,
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "cross" },
     },
     xAxis: {
       type: "category",
@@ -48,6 +66,27 @@ const confirmQuery = async () => {
         label: {
           show: true,
           position: "top",
+        },
+        markLine: {
+          data: [
+            {
+              yAxis: threshold,
+              name: "",
+              lineStyle: {
+                color: "red",
+                type: "dashed",
+              },
+              label: {
+                show: true,
+                position: "middle",
+                formatter: (params) => {
+                  return `阈值: ${params.value}`;
+                },
+                color: "red",
+              },
+              symbol: "none",
+            },
+          ],
         },
       },
     ],
