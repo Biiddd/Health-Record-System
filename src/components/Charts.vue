@@ -3,7 +3,6 @@ import { reactive } from "vue";
 import axios from "axios";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
-import locale from "ant-design-vue/es/date-picker/locale/zh_CN";
 
 const chart = reactive({
   Date: null,
@@ -63,7 +62,7 @@ const confirmQuery = async () => {
 <template>
   <a-form layout="inline">
     <a-form-item class="date-picker" label="选择日期范围">
-      <a-range-picker v-model:value="chart.Date" :locale="locale" />
+      <a-range-picker v-model:value="chart.Date" />
     </a-form-item>
     <a-form-item label="指标类型">
       <a-select v-model:value="chart.Type" placeholder="选一种指标">
