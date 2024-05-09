@@ -14,49 +14,49 @@ const confirmQuery = async () => {
   // 格式化日期
   const formattedStartDate = dayjs(chart.Date[0]).format("YYYY-MM-DD");
   const formattedEndDate = dayjs(chart.Date[1]).format("YYYY-MM-DD");
-    const response = await axios.get('http://localhost:33001/api/charts', {
-      params: {
-        startDate: formattedStartDate,
-        endDate: formattedEndDate,
-        chartType: chart.Type
-      }
-    });
+  const response = await axios.get("http://localhost:33001/api/charts", {
+    params: {
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+      chartType: chart.Type,
+    },
+  });
 
-    // 从后端返回的response.data获取数据
-    const data = response.data;
+  // 从后端返回的response.data获取数据
+  const data = response.data;
 
-    // 提取数据进行渲染
-    const xData = data.map((item) => item.date);
-    const yData = data.map((item) => item.value);
+  // 提取数据进行渲染
+  const xData = data.map((item) => item.date);
+  const yData = data.map((item) => item.value);
 
-    // 配置echarts的图表选项
-    const option = {
-      title: {
-        text: `${formattedStartDate} 到 ${formattedEndDate} ${chart.Type}趋势`,
-      },
-      xAxis: {
-        type: "category",
-        data: xData,
-        name: "日期",
-      },
-      yAxis: {
-        type: "value",
-      },
-      series: [
-        {
-          data: yData,
-          type: "line",
-          smooth: true,
-          label: {
-            show: true,
-            position: 'top'
-          },
+  // 配置echarts的图表选项
+  const option = {
+    title: {
+      text: `${formattedStartDate} 到 ${formattedEndDate} ${chart.Type}趋势`,
+    },
+    xAxis: {
+      type: "category",
+      data: xData,
+      name: "日期",
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: yData,
+        type: "line",
+        smooth: true,
+        label: {
+          show: true,
+          position: "top",
         },
-      ],
-    };
-    // 初始化图表并设置选项
-    const myChart = echarts.init(document.getElementById("main"));
-    myChart.setOption(option);
+      },
+    ],
+  };
+  // 初始化图表并设置选项
+  const myChart = echarts.init(document.getElementById("main"));
+  myChart.setOption(option);
 };
 </script>
 
@@ -79,7 +79,7 @@ const confirmQuery = async () => {
       <a-button type="primary" @click="confirmQuery()">确定</a-button>
     </a-form-item>
   </a-form>
-  <div id="main" style="width: 1200px; height: 600px"></div>
+  <div id="main" style="width: 1200px; height: 550px"></div>
 </template>
 
 <style scoped>

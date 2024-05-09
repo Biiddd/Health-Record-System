@@ -1,6 +1,8 @@
 <script setup>
 import { cloneDeep } from "lodash-es";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import axios from "axios";
+
 const columns = [
   {
     title: "日期",
@@ -18,40 +20,40 @@ const columns = [
     width: "12%",
   },
   {
-    title: "CA125",
-    dataIndex: "ca125",
+    title: "CEA",
+    dataIndex: "cea",
     width: "12%",
   },
   {
-    title: "CA125",
-    dataIndex: "ca125",
+    title: "CA153",
+    dataIndex: "ca153",
     width: "12%",
   },
   {
-    title: "CA125",
-    dataIndex: "ca125",
+    title: "CA724",
+    dataIndex: "ca724",
     width: "12%",
   },
   {
-    title: "CA125",
-    dataIndex: "ca125",
+    title: "HE4",
+    dataIndex: "he4",
     width: "12%",
   },
   {
-    title: "operation",
+    title: "操作",
     dataIndex: "operation",
   },
 ];
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i.toString(),
-    date: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
-const dataSource = ref(data);
+
+const fetchData = async () => {
+  try {
+    const response = await axios.post("http://localhost:33001/api/data");
+    dataSource.value = response.data;
+  } catch (error) {
+    console.error("获取数据失败", error);
+  }
+};
+const dataSource = ref([]);
 const editableData = reactive({});
 const edit = (key) => {
   editableData[key] = cloneDeep(
@@ -68,12 +70,22 @@ const save = (key) => {
 const cancel = (key) => {
   delete editableData[key];
 };
+
+onMounted(() => {
+  fetchData();
+});
 </script>
 
 <template>
   <a-table :columns="columns" :data-source="dataSource" bordered>
     <template #bodyCell="{ column, text, record }">
-      <template v-if="['date', 'age', 'address'].includes(column.dataIndex)">
+      <template
+        v-if="
+          ['date', 'ca125', 'ca199', 'cea', 'ca153', 'ca724', 'he4'].includes(
+            column.dataIndex,
+          )
+        "
+      >
         <div>
           <a-input
             v-if="editableData[record.key]"
