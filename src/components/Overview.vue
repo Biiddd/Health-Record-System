@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import http from "@/http.js";
+import dayjs from "dayjs";
 
 const dataSource = ref([]);
 const lastCheckDate = ref("");
@@ -72,24 +73,16 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <div style="font-size: 32px; font-weight: bolder; padding-bottom: 20px">
-      上一次化验时间：{{ lastCheckDate }}
-    </div>
-    <div
-      style="
-        font-size: 32px;
-        font-weight: bolder;
-        padding-top: 30px;
-        padding-bottom: 20px;
-      "
-    >
-      上一次化验数据
-    </div>
-    <div style="padding: 20px; height: 80vh">
+    <span class="common-text"> 今天是 {{ dayjs().format("YYYY-MM-DD") }} </span>
+    <div class="common-text">上一次化验时间：{{ lastCheckDate }}</div>
+    <div class="common-text">上一次化验数据</div>
+    <div class="last-check-data">
       <a-table
         :dataSource="dataSource"
         :columns="columns"
         :pagination="false"
+        style="background-color: rgba(255, 255, 255, 0.2)"
+        bordered: true
       />
     </div>
   </div>
@@ -102,5 +95,16 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.common-text {
+  font-size: 32px;
+  font-weight: bolder;
+  padding-bottom: 20px;
+}
+
+.last-check-data {
+  padding: 20px;
+  height: 80vh;
 }
 </style>

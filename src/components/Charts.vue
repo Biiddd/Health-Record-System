@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import http from "@/http.js";
@@ -9,6 +9,9 @@ const chart = reactive({
   Type: null,
 });
 
+const disabledDate = (current) => {
+  return current && current > dayjs().endOf("day");
+};
 const confirmQuery = async () => {
   // 格式化日期
   const formattedStartDate = dayjs(chart.Date[0]).format("YYYY-MM-DD");
@@ -94,12 +97,19 @@ const confirmQuery = async () => {
   const myChart = echarts.init(document.getElementById("main"));
   myChart.setOption(option);
 };
+
+watch([() => chart.Date, () => chart.Type], () => {
+  confirmQuery();
+});
 </script>
 
 <template>
   <a-form layout="inline">
     <a-form-item class="date-picker" label="选择日期范围">
-      <a-range-picker v-model:value="chart.Date" />
+      <a-range-picker
+        v-model:value="chart.Date"
+        :disabled-date="disabledDate"
+      />
     </a-form-item>
     <a-form-item label="指标类型">
       <a-select v-model:value="chart.Type" placeholder="选一种指标">
@@ -110,9 +120,6 @@ const confirmQuery = async () => {
         <a-select-option value="CA724">CA724</a-select-option>
         <a-select-option value="HE4">HE4</a-select-option>
       </a-select>
-    </a-form-item>
-    <a-form-item>
-      <a-button type="primary" @click="confirmQuery()">确定</a-button>
     </a-form-item>
   </a-form>
   <div id="main" style="width: 1200px; height: 550px"></div>
