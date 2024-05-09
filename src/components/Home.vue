@@ -15,6 +15,7 @@ const router = useRouter();
 const logout = () => {
   // 清除用户信息
   setlogout();
+
   // 重定向到登录页面
   router.push({ name: "Login" });
 };
@@ -46,59 +47,23 @@ const logout = () => {
             </a-menu-item>
 
             <a-menu-item key="2">
-              <router-link to="/inputdata">
+              <router-link to="/inputData">
                 <EditOutlined />
                 <span>数据录入</span>
               </router-link>
             </a-menu-item>
 
             <a-menu-item key="3">
-              <router-link to="/charts/ca125">
+              <router-link to="/charts">
                 <LineChartOutlined />
-                <span>CA125</span>
+                <span>指标趋势</span>
               </router-link>
             </a-menu-item>
 
             <a-menu-item key="4">
-              <router-link to="/charts/ca199">
+              <router-link to="/allData">
                 <LineChartOutlined />
-                <span>CA199</span>
-              </router-link>
-            </a-menu-item>
-
-            <a-menu-item key="5">
-              <router-link to="/charts/cea" class="custom-menu-item">
-                <LineChartOutlined />
-                <span>CEA</span>
-              </router-link>
-            </a-menu-item>
-
-            <a-menu-item key="6">
-              <router-link
-                to="/charts/ca153"
-                tag="div"
-                class="custom-menu-item"
-              >
-                <LineChartOutlined />
-                <span>CA153</span>
-              </router-link>
-            </a-menu-item>
-
-            <a-menu-item key="7">
-              <router-link
-                to="/charts/ca724"
-                tag="div"
-                class="custom-menu-item"
-              >
-                <LineChartOutlined />
-                <span>CA724</span>
-              </router-link>
-            </a-menu-item>
-
-            <a-menu-item key="8">
-              <router-link to="/charts/he4" tag="div" class="custom-menu-item">
-                <LineChartOutlined />
-                <span>HE4</span>
+                <span>全部数据</span>
               </router-link>
             </a-menu-item>
 
@@ -106,7 +71,7 @@ const logout = () => {
               type="primary"
               danger
               size="large"
-              style="margin-left: 23px"
+              style="margin-left: 23px; margin-top: 20px"
               @click="logout"
             >
               <span>注销</span>
@@ -146,14 +111,6 @@ const logout = () => {
   color: white;
   font-size: 40px;
   align-items: center;
-}
-
-.site-layout-background {
-  background: #fff;
-}
-
-.custom-menu-item {
-  margin-bottom: 10px;
 }
 
 .logo {

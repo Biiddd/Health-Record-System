@@ -22,14 +22,19 @@ const routes = [
         component: () => import('@/components/Overview.vue')
       },
       {
-        path: '/inputdata',
+        path: '/inputData',
         name: 'InputData',
         component: () => import('@/components/Input.vue')
       },
       {
-        path: '/charts/:chartType',
+        path: '/charts',
         name: 'Charts',
         component: () => import('@/components/Charts.vue')
+      },
+      {
+        path: '/allData',
+        name: 'Data',
+        component: () => import('@/components/Data.vue')
       }
     ]
   }
