@@ -29,15 +29,17 @@ const checkData = reactive({
   he4Value: null,
 });
 
-const submitForm = () => {
-  http()
-    .post(`/input`, checkData)
-    .then((response) => {
-      message.success("数据录入成功");
-    })
-    .catch((error) => {
-      message.warning("录入失败，请联系你崽");
-    });
+const submitForm = async () => {
+  try {
+    const response = await http.post("/input", checkData);
+    message.success("录入成功");
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      message.warning(error.response.data || "录入失败");
+    } else {
+      message.warning("录入失败，请检查网络连接");
+    }
+  }
 };
 </script>
 
