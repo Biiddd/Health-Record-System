@@ -73,21 +73,16 @@ const save = async (check_id) => {
   // 查找对应 check_id 的原始记录
   const originalRecord = dataSource.value.find((item) => check_id === item.check_id);
 
-  // 从 editableData 中获取编辑后的记录
   const editedRecord = editableData[check_id];
-
-  // 创建一个对象，用于存储修改过的字段
   const modifiedData = {};
-
-  // 比较原始记录和编辑后的记录
   for (const key in editedRecord) {
-    // 只要字段值不同，就认为该字段被修改了
     if (editedRecord[key] !== originalRecord[key]) {
       modifiedData[key] = editedRecord[key];
     }
   }
   // 如果没有任何修改，则不需要发送请求
   if (Object.keys(modifiedData).length === 0) {
+    message.info("未修改任何数据", 5);
     delete editableData[check_id];
     return;
   }
@@ -104,7 +99,7 @@ const save = async (check_id) => {
   }
 };
 
-const cancel = (date) => {
+const cancel = (check_id) => {
   delete editableData[check_id];
 };
 
@@ -125,7 +120,7 @@ onMounted(() => {
       <template #bodyCell="{ column, text, record }">
         <template
           v-if="
-            ['date', 'ca125', 'ca199', 'cea', 'ca153', 'ca724', 'he4'].includes(
+            ['ca125', 'ca199', 'cea', 'ca153', 'ca724', 'he4'].includes(
               column.dataIndex,
             )
           "
