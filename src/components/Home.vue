@@ -28,7 +28,7 @@ const logout = () => {
       <div class="logo">
         <img src="@/assets/logo.png" alt="logo" />
       </div>
-      <h1 class="h1-text">晓芸指标记录系统</h1>
+      <h1 class="h1-text">Biter 健康助手</h1>
     </a-layout-header>
 
     <a-layout-content class="content-container">
@@ -44,6 +44,13 @@ const logout = () => {
               <router-link to="/Overview">
                 <BookOutlined />
                 <span>概况</span>
+              </router-link>
+            </a-menu-item>
+
+            <a-menu-item key="8">
+              <router-link to="/weight">
+                <BookOutlined />
+                <span>体重</span>
               </router-link>
             </a-menu-item>
 

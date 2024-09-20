@@ -22,6 +22,10 @@ const routes = [
         component: () => import("@/components/Overview.vue"),
       },
       {
+        path: "/weight",
+        component: () => import("@/components/Weight.vue"),
+      },
+      {
         path: "/inputData",
         name: "InputData",
         component: () => import("@/components/Input.vue"),

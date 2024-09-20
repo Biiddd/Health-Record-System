@@ -24,13 +24,27 @@ const confirmQuery = async () => {
     },
   });
 
-  // 设置阈值
-  const threshold = response.data.data.threshold
+  const data = response.data;
 
-  // 设置图标数据
-  const chartData = response.data.data.chartData;
-  const xData = chartData.map((item) => item.date);
-  const yData = chartData.map((item) => item.value);
+  // 提取数据进行渲染
+  const xData = data.map((item) => item.date);
+  const yData = data.map((item) => item.value);
+  // 设置阈值
+  let threshold = 0;
+
+  if (chart.Type === "CA125") {
+    threshold = 35;
+  } else if (chart.Type === "CA199") {
+    threshold = 37;
+  } else if (chart.Type === "CEA") {
+    threshold = 5;
+  } else if (chart.Type === "CA153") {
+    threshold = 25;
+  } else if (chart.Type === "CA724") {
+    threshold = 6.9;
+  } else if (chart.Type === "HE4") {
+    threshold = 70;
+  }
 
   const option = {
     title: {
@@ -91,22 +105,17 @@ watch([() => chart.Date, () => chart.Type], () => {
 </script>
 
 <template>
+  <a-row :gutter="[16, 48]" style="margin-bottom: 20px">
+    <a-col :span="24">
+      <span class="common-text"> 今天是 {{ dayjs().format("YYYY-MM-DD") }}, 请在下方输入今天的体重 </span>
+    </a-col>
+  </a-row>
   <a-form layout="inline">
     <a-form-item class="date-picker" label="选择日期范围">
       <a-range-picker
         v-model:value="chart.Date"
         :disabled-date="disabledDate"
       />
-    </a-form-item>
-    <a-form-item label="指标类型">
-      <a-select v-model:value="chart.Type" placeholder="选一种指标">
-        <a-select-option value="CA125">CA125</a-select-option>
-        <a-select-option value="CA199">CA199</a-select-option>
-        <a-select-option value="CEA">CEA</a-select-option>
-        <a-select-option value="CA153">CA153</a-select-option>
-        <a-select-option value="CA724">CA724</a-select-option>
-        <a-select-option value="HE4">HE4</a-select-option>
-      </a-select>
     </a-form-item>
   </a-form>
   <div id="main" style="width: 1200px; height: 550px"></div>
@@ -115,5 +124,10 @@ watch([() => chart.Date, () => chart.Type], () => {
 <style scoped>
 .date-picker {
   margin-bottom: 8px;
+}
+.common-text {
+  font-size: 32px;
+  font-weight: bolder;
+  padding-bottom: 20px;
 }
 </style>
